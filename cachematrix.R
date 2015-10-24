@@ -3,7 +3,7 @@
 
 ## makeCacheMatrix -- Creates a matrix that incorporates lexical scopping
 ## which creates two environments: A CACHE FOR STORING/RETRIVAL AND
-## THE OTHER FOR EXECUTION ON THE MATRIX
+## THE OTHER FOR EXECUTION ON THE MATRIX  FOR CREATION OF SPECIAL "MATRIX"
 ## makeCacheMatrix: This function creates a special "matrix" object that
 ## can cache its inverse.
 
@@ -14,12 +14,15 @@
 
 ## Write a short comment describing this function --
 
-## makeCacheMatrix -- This function creates a matrix from a data object such 
-## as a vector/array/factor/frame and sets two environments.  One environment
-## is for creating the matrix from the object and the other environment is
-## for storage of the inverse matrix.
+## makeCacheMatrix -- This function creates a matrix from a matrix data object  
+## and sets two environments.  One environment is for creating the special
+## "matrix" from the matrix object and the other environment is
+## for storage/cache of the created inverse matrix.
   
   makeCacheMatrix <- function(x = matrix()) {
+    
+##  assign variables for lexical scoping
+    
     mat<-NULL
     
     set<-function(y){
@@ -52,6 +55,9 @@
         ## Return a matrix that is the inverse of 'x'
   
   cacheSolve <- function(x=matrix(), ...) {
+    
+## assign function to global variable
+    
     mat<-x$getmatrix()
     
         ## Determine if matrix has been changed, if it hasn't then the inverse
