@@ -4,9 +4,13 @@
 ## makeCacheMatrix -- Creates a matrix that incorporates lexical scopping
 ## which creates two environments: A CACHE FOR STORING/RETRIVAL AND
 ## THE OTHER FOR EXECUTION ON THE MATRIX
-
 ## makeCacheMatrix: This function creates a special "matrix" object that
 ## can cache its inverse.
+
+## cacheSolve -- cacheSolve: This function computes the inverse of the special
+## "matrix" returned by makeCacheMatrix above. If the inverse has alread
+## been calculated (and the matrix has not changed), then the cachesolve
+## should retrieve the inverse from the cache.
 
 ## Write a short comment describing this function --
 
@@ -23,10 +27,14 @@
       mat<<-NULL
     }
     
+        ## generate the special "matrix"
+    
     get<-function() x
     setmatrix<-function(solve) mat<<- solve
     getmatrix<-function() mat
     
+        ## cache the special "matrix"
+     
     list(set=set, get=get,
          setmatrix=setmatrix,
          getmatrix=getmatrix)
@@ -46,11 +54,16 @@
   cacheSolve <- function(x=matrix(), ...) {
     mat<-x$getmatrix()
     
+        ## Determine if matrix has been changed, if it hasn't then the inverse
+        ## should be retrieved from the cache.
+    
     if(!is.null(mat)){
       message("retriving cached data")
       return(mat)
       
     }
+    
+       ##  Calculate the inverse of 'x' for the retrieved matrix.
     
     matrix<-x$get()
     mat<-solve(matrix, ...)
